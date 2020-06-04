@@ -1,10 +1,16 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
+using System.Threading;
 using System.Threading.Tasks;
+using Andy.Mes.Application;
+using Autofac;
+using Autofac.Core;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.CodeAnalysis;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -24,11 +30,13 @@ namespace Andy.Mes.Web
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
+            //services.AddHttpContextAccessor();
+            services.AddControllers()
+                .AddControllersAsServices();
 
             services.AddMvcCore(mvcOption =>
             {
                 mvcOption.EnableEndpointRouting = false;
-
             });
         }
 
@@ -62,13 +70,24 @@ namespace Andy.Mes.Web
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
             });
-
-            //app.UseEndpoints(endpoints =>
-            //{
-            //    endpoints.MapControllerRoute(
-            //        name: "default",
-            //        pattern: "{controller=Home}/{action=Index}/{id?}");
-            //});
         }
+
+        public void ConfigureContainer(ContainerBuilder builder)
+        {
+            //regist service
+            builder.RegisterAssemblyTypes(Assembly.Load("Andy.Mes.Application"))
+                .Where(t => t.IsSubclassOf(typeof(ServiceBase)))
+                .AsImplementedInterfaces()
+                .PropertiesAutowired();
+                
+
+            //services auto writed for controller
+            var controllerBaseType = typeof(ControllerBase);
+            builder.RegisterAssemblyTypes(typeof(Program).Assembly)
+                .Where(t => controllerBaseType.IsAssignableFrom(t))
+                .PropertiesAutowired()
+                .InstancePerLifetimeScope();
+        }
+
     }
 }

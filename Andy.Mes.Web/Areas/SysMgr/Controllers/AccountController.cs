@@ -2,14 +2,23 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Andy.Mes.Application;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Andy.Mes.Web.Areas.Areas.Controllers
 {
     [Area("SysMgr")]
-    public class AccountController : Controller
+    public class AccountController : ControllerBase
     {
+        public IAccountService AccountService { get; set; }
+
+        //public AccountController(IAccountService ervice)
+        //{
+
+
+        //}
+
         // GET: AccountController
         public ActionResult Index()
         {
@@ -25,6 +34,10 @@ namespace Andy.Mes.Web.Areas.Areas.Controllers
         // GET: AccountController/Create
         public ActionResult Create()
         {
+            if (AccountService == null)
+            {
+
+            }
             return View();
         }
 

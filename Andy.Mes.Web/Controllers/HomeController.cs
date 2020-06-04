@@ -9,7 +9,7 @@ using Andy.Mes.Web.Models;
 
 namespace Andy.Mes.Web.Controllers
 {
-    public class HomeController : Controller
+    public class HomeController : ControllerBase
     {
         private readonly ILogger<HomeController> _logger;
 
