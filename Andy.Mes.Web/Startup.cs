@@ -14,6 +14,7 @@ using Microsoft.CodeAnalysis;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Serilog;
 
 namespace Andy.Mes.Web
 {
@@ -79,7 +80,22 @@ namespace Andy.Mes.Web
                 .Where(t => t.IsSubclassOf(typeof(ServiceBase)))
                 .AsImplementedInterfaces()
                 .PropertiesAutowired();
-                
+
+            //serilog
+            builder.Register<ILogger>((c, p) =>
+            {
+                return new LoggerConfiguration()
+                .MinimumLevel.Debug()
+                .MinimumLevel.Override("Microsoft", Serilog.Events.LogEventLevel.Information)
+                .Enrich.FromLogContext()
+                .WriteTo.Console()
+                .WriteTo.File("./Logs/logs.log",
+                    fileSizeLimitBytes: 1_000_000,
+                    rollOnFileSizeLimit: true, 
+                    shared: true, 
+                    flushToDiskInterval: TimeSpan.FromSeconds(1))
+                .CreateLogger();
+            }).SingleInstance();
 
             //services auto writed for controller
             var controllerBaseType = typeof(ControllerBase);

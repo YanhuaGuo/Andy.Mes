@@ -33,6 +33,7 @@ namespace Andy.Mes.Web.Areas.Areas.Controllers
 
         // GET: AccountController/Create
         public ActionResult Create()
+        
         {
             if (AccountService == null)
             {
@@ -48,6 +49,10 @@ namespace Andy.Mes.Web.Areas.Areas.Controllers
         {
             try
             {
+                Logger.Information("login start");
+
+                AccountService.Login(new LoginDto() { Username = "admin", Pwd = "admin" });
+
                 return RedirectToAction(nameof(Index));
             }
             catch
