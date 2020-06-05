@@ -3,11 +3,12 @@
 @{
     ViewData["Title"] = "Create";
     Layout = "~/Views/Shared/_Layout.cshtml";
+    string testCode = ViewData["db"]?.ToString();
 }
 
 <h1>Create</h1>
 
-<h4>ErrorViewModel</h4>
+<h4>conn:@testCode</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">

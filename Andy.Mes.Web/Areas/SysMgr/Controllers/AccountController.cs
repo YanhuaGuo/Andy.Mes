@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Andy.Mes.Application;
+using Andy.Mes.Core.Configuration;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -33,12 +34,13 @@ namespace Andy.Mes.Web.Areas.Areas.Controllers
 
         // GET: AccountController/Create
         public ActionResult Create()
-        
+
         {
             if (AccountService == null)
             {
-
+                //test code
             }
+            ViewData["db"] = SystemConfig.Config.DbConfig.ConnectionString;
             return View();
         }
 

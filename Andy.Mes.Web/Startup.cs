@@ -5,6 +5,7 @@ using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
 using Andy.Mes.Application;
+using Andy.Mes.Core.Configuration;
 using Autofac;
 using Autofac.Core;
 using Microsoft.AspNetCore.Builder;
@@ -30,6 +31,7 @@ namespace Andy.Mes.Web
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+
             services.AddControllersWithViews();
             //services.AddHttpContextAccessor();
             services.AddControllers()
@@ -75,11 +77,17 @@ namespace Andy.Mes.Web
 
         public void ConfigureContainer(ContainerBuilder builder)
         {
+            //config
+            SystemConfig config = new SystemConfig(); 
+            Configuration.GetSection(SystemConfig.Position).Bind(config);
+            SystemConfig.Config = config;
+
             //regist service
             builder.RegisterAssemblyTypes(Assembly.Load("Andy.Mes.Application"))
                 .Where(t => t.IsSubclassOf(typeof(ServiceBase)))
                 .AsImplementedInterfaces()
                 .PropertiesAutowired();
+           
 
             //serilog
             builder.Register<ILogger>((c, p) =>
@@ -89,8 +97,8 @@ namespace Andy.Mes.Web
                 .MinimumLevel.Override("Microsoft", Serilog.Events.LogEventLevel.Information)
                 .Enrich.FromLogContext()
                 .WriteTo.Console()
-                .WriteTo.File("./Logs/logs.log",
-                    fileSizeLimitBytes: 1_000_000,
+                .WriteTo.File("./Logs/logs-.log",rollingInterval: RollingInterval.Day,
+                    fileSizeLimitBytes: 1024*10,
                     rollOnFileSizeLimit: true, 
                     shared: true, 
                     flushToDiskInterval: TimeSpan.FromSeconds(1))
