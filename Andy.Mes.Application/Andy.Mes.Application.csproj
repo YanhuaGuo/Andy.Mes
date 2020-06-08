@@ -6,6 +6,8 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Andy.Mes.Core\Andy.Mes.Core.csproj" />
+    <ProjectReference Include="..\Andy.Mes.Entity\Andy.Mes.Entity.csproj" />
+    <ProjectReference Include="..\Andy.Mes.Persistence\Andy.Mes.Persistence.csproj" />
   </ItemGroup>
 
 </Project>

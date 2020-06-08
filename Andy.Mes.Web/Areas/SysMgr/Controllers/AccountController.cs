@@ -57,8 +57,9 @@ namespace Andy.Mes.Web.Areas.Areas.Controllers
 
                 return RedirectToAction(nameof(Index));
             }
-            catch
+            catch (Exception ex)
             {
+                Logger.Error(ex,"error!");
                 return View();
             }
         }
