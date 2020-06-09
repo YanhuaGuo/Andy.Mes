@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Mvc;
 using Serilog;
 using System;
 using System.Collections.Generic;
@@ -9,6 +10,9 @@ namespace Andy.Mes.Web
 {
     public abstract class ControllerBase : Controller
     {
+
+        public IMapper ObjectMapper { get; set; }
+
         public ILogger Logger { get; set; }
     }
 }

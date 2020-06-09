@@ -11,7 +11,7 @@ namespace Andy.Mes.Application
 {
     public class AccountService : ServiceBase, IAccountService
     {
-        public Result Login(LoginDto input)
+        public Result Login(string userName,string pwd)
         {
             //Logger.Debug("user:{0} already login!", input.Username);
 

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Andy.Mes.Application;
 using Andy.Mes.Core.Configuration;
+using Andy.Mes.Entity;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -47,19 +48,20 @@ namespace Andy.Mes.Web.Areas.Areas.Controllers
         // POST: AccountController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        public ActionResult Create(LoginDto input)
         {
             try
             {
-                Logger.Information("login start");
+                UserInfo usr = ObjectMapper.Map<UserInfo>(input);
 
-                AccountService.Login(new LoginDto() { Username = "admin", Pwd = "admin" });
+
+                AccountService.Login(username: "admin", pwd: "admin");
 
                 return RedirectToAction(nameof(Index));
             }
             catch (Exception ex)
             {
-                Logger.Error(ex,"error!");
+                Logger.Error(ex, "error!");
                 return View();
             }
         }

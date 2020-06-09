@@ -7,6 +7,6 @@ namespace Andy.Mes.Application
 {
     public interface IAccountService
     {
-        Result Login(LoginDto input);
+        Result Login(string username,string pwd);
     }
 }

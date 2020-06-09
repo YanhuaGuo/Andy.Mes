@@ -6,8 +6,10 @@ using System.Threading;
 using System.Threading.Tasks;
 using Andy.Mes.Application;
 using Andy.Mes.Core.Configuration;
+using Andy.Mes.Web.Models;
 using Autofac;
 using Autofac.Core;
+using AutoMapper;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -31,7 +33,6 @@ namespace Andy.Mes.Web
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-
             services.AddControllersWithViews();
             //services.AddHttpContextAccessor();
             services.AddControllers()
@@ -111,6 +112,12 @@ namespace Andy.Mes.Web
                 .Where(t => controllerBaseType.IsAssignableFrom(t))
                 .PropertiesAutowired()
                 .InstancePerLifetimeScope();
+
+            //automapper
+            List<Assembly> ass = new List<Assembly>();
+            ass.AddRange(Assembly.Load("Andy.Mes.Web").GetTypes().Where(w=>w.IsAssignableFrom(typeof(ViewModelBase))).Select(x => x.Assembly));
+            ass.AddRange(Assembly.Load("Andy.Mes.Entity").GetTypes().Select(x => x.Assembly));
+            builder.RegisterModule(new AutoMapperModule(ass));
         }
 
     }
