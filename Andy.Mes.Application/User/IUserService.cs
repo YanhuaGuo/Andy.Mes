@@ -9,7 +9,7 @@ namespace Andy.Mes.Application
     {
         IEnumerable<SysMgrUser> List();
 
-        SysMgrUser GetById();
+        SysMgrUser GetById(string guid);
 
         void Update(SysMgrUser entity);
 

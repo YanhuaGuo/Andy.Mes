@@ -1,6 +1,8 @@
 ﻿using Andy.Mes.Entity;
+using Microsoft.EntityFrameworkCore.Storage.ValueConversion.Internal;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace Andy.Mes.Application
@@ -9,27 +11,27 @@ namespace Andy.Mes.Application
     {
         public void Create(SysMgrUser entity)
         {
-            throw new NotImplementedException();
+            Repository.Insert(entity);
         }
 
         public void Delete(string guid)
         {
-            throw new NotImplementedException();
+            Repository.Delete<SysMgrUser>(guid);
         }
 
-        public SysMgrUser GetById()
+        public SysMgrUser GetById(string guid)
         {
-            throw new NotImplementedException();
+            return Repository.GetEntity<SysMgrUser>(guid);
         }
 
         public IEnumerable<SysMgrUser> List()
         {
-            throw new NotImplementedException();
+            return Repository.GetIQueryable<SysMgrUser>().ToList();
         }
 
         public void Update(SysMgrUser entity)
         {
-            throw new NotImplementedException();
+            Repository.Update(entity);
         }
     }
 }
