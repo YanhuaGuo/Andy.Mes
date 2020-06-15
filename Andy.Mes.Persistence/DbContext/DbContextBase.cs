@@ -31,6 +31,9 @@ namespace Andy.Mes.Persistence
             _model = model;
         }
 
+        private static ILoggerFactory _loggerFactory =
+            new LoggerFactory(new ILoggerProvider[] { new EFCoreSqlLogeerProvider() });
+
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             //if (_nameOrConStr.IsNullOrEmpty())
@@ -49,7 +52,7 @@ namespace Andy.Mes.Persistence
                 default: throw new Exception("暂不支持该数据库！");
             }
 
-            //optionsBuilder.UseLoggerFactory(_loger);
+            optionsBuilder.UseLoggerFactory(_loggerFactory);
         }
 
         /// <summary>
