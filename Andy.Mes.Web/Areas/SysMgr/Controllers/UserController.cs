@@ -75,9 +75,9 @@ namespace Andy.Mes.Web.Areas.SysMgr.Controllers
                 UserService.Update(ent);
                 return RedirectToAction(nameof(Index));
             }
-            catch
+            catch(Exception ex)
             {
-                return View();
+                return BadRequest(ex);
             }
         }
 

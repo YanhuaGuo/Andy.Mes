@@ -83,7 +83,7 @@ namespace Andy.Mes.Persistence
             if (type == model)
                 targetObj = entity;
             else
-                targetObj = null;// entity.ChangeType(model);
+                targetObj = entity.ChangeType(model);
 
             return _db.Attach(targetObj);
         }
