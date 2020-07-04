@@ -7,10 +7,8 @@ using System.Text;
 namespace Andy.Mes.Entity
 {
     [Table("SysMgrUser")]
-    public class SysMgrUser
+    public class SysMgrUser : EntityBase
     {
-        [Key]
-        public string Guid { get; set; }
         public string DataVersion { get; set; }
 
         [Required]

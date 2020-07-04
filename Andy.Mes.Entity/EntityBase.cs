@@ -9,5 +9,11 @@ namespace Andy.Mes.Entity
     {
         [Key]
         public string Guid { get; set; }
+
+        [Required]
+        /// <summary>
+        /// 是否删除
+        /// </summary>
+        public bool IsDeleted { get; set; }
     }
 }
