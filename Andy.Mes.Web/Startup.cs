@@ -5,10 +5,12 @@ using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
 using Andy.Mes.Application;
+using Andy.Mes.Core;
 using Andy.Mes.Core.Configuration;
 using Andy.Mes.Web.Models;
 using Autofac;
 using Autofac.Core;
+using Autofac.Extras.DynamicProxy;
 using AutoMapper;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -87,7 +89,9 @@ namespace Andy.Mes.Web
             builder.RegisterAssemblyTypes(Assembly.Load("Andy.Mes.Application"))
                 .Where(t => t.IsSubclassOf(typeof(ServiceBase)))
                 .AsImplementedInterfaces()
-                .PropertiesAutowired();
+                .PropertiesAutowired()
+                .EnableInterfaceInterceptors().InterceptedBy(typeof(CacheInterceptor));
+                //.EnableClassInterceptors();
            
 
             //serilog
@@ -105,6 +109,10 @@ namespace Andy.Mes.Web
                     flushToDiskInterval: TimeSpan.FromSeconds(1))
                 .CreateLogger();
             }).SingleInstance();
+
+
+            // Typed registration
+            builder.Register(c => new CacheInterceptor(c.Resolve<ILogger>()));
 
             //services auto writed for controller
             var controllerBaseType = typeof(ControllerBase);
