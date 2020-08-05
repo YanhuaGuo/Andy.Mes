@@ -2,6 +2,12 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
+    <OutputType>Exe</OutputType>
   </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Andy.Mes.Core\Andy.Mes.Core.csproj" />
+    <ProjectReference Include="..\Andy.Mes.Entity\Andy.Mes.Entity.csproj" />
+  </ItemGroup>
 
 </Project>

@@ -241,7 +241,10 @@ namespace Andy.Mes.Persistence
         /// <value>
         /// The handle SQL log.
         /// </value>
-        public Action<string> HandleSqlLog { get; set; }
+        public Action<string> HandleSqlLog
+        {
+            set => EFCoreSqlLogeerProvider.HandleSqlLog = value;
+        }
 
         /// <summary>
         /// 使用已存在的事物

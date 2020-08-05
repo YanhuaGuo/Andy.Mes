@@ -16,6 +16,7 @@ namespace Andy.Mes.Application
         public ServiceBase()
         {
             Repository = DbFactory.GetRepository(SystemConfig.Config.DbConfig.ConnectionString, DatabaseType.SqlServer);
+            Repository.HandleSqlLog = System.Console.WriteLine;
         }
     }
 }
