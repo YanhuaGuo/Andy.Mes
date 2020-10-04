@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Serilog;
 
 namespace Andy.Mes.Web
 {
@@ -22,10 +23,12 @@ namespace Andy.Mes.Web
             Host.CreateDefaultBuilder(args)
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
-                    webBuilder.UseContentRoot(Directory.GetCurrentDirectory()).UseIISIntegration();
+                    webBuilder.UseContentRoot(Directory.GetCurrentDirectory())
+                    .UseIISIntegration();
                     webBuilder.UseStartup<Startup>();
                 })
             .UseServiceProviderFactory(new AutofacServiceProviderFactory())
+            .UseSerilog(dispose:true)
             .ConfigureAppConfiguration((hostcontext, config) =>
             {
                 // 获取项目环境

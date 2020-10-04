@@ -93,17 +93,14 @@ namespace Andy.Mes.Web
             //serilog
             builder.Register<ILogger>((c, p) =>
             {
-                return new LoggerConfiguration()
-                .MinimumLevel.Debug()
-                .MinimumLevel.Override("Microsoft", Serilog.Events.LogEventLevel.Information)
-                .Enrich.FromLogContext()
-                .WriteTo.Console()
-                .WriteTo.File("./Logs/logs-.log",rollingInterval: RollingInterval.Day,
-                    fileSizeLimitBytes: 1024*10,
-                    rollOnFileSizeLimit: true, 
-                    shared: true, 
-                    flushToDiskInterval: TimeSpan.FromSeconds(1))
+                Log.Logger = new LoggerConfiguration()
+                .ReadFrom.Configuration(Configuration) 
+                .WriteTo.Debug()
                 .CreateLogger();
+
+                Log.Information("Getting the motors running...");
+
+                return Log.Logger; 
             }).SingleInstance();
 
             //services auto writed for controller
