@@ -107,5 +107,11 @@ namespace Andy.Mes.Web.Areas.Areas.Controllers
                 return View();
             }
         }
+
+
+        public ActionResult TestUI()
+        {
+            return View();
+        }
     }
 }
