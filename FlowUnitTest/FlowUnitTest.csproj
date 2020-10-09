@@ -1,0 +1,18 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework> 
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Andy.Mes.Application\Andy.Mes.Application.csproj" />
+    <ProjectReference Include="..\Andy.Mes.Core\Andy.Mes.Core.csproj" />
+    <ProjectReference Include="..\Andy.Mes.Dto\Andy.Mes.Dto.csproj" />
+    <ProjectReference Include="..\Andy.Mes.Entity\Andy.Mes.Entity.csproj" />
+    <ProjectReference Include="..\Andy.Mes.Persistence\Andy.Mes.Persistence.csproj" />
+    <PackageReference Include="Autofac.Extensions.DependencyInjection" Version="6.0.0" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.5.0" />
+    <PackageReference Include="NUnit" Version="3.9.0" />
+    <PackageReference Include="NUnit3TestAdapter" Version="3.9.0" />
+  </ItemGroup>
+</Project>
